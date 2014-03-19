@@ -37,7 +37,7 @@ CHECKSSH_OUTPUTFILTER="-e illegal -e unknown"
 MEMORY_STATUS=0
 SSH_STATUS=0
 
-func check_memory(){
+check_memory () {
     myPERMSRESULT=$(ipcs -m | grep ${CHECKMEMORY_PERMS} | wc -l)
     if [ ${myPERMSRESULT} -gt 0 ]; then
         myMEMRESULT=$(ipcs -m | grep ${CHECKMEMORY_MEM} | wc -l)
@@ -51,7 +51,7 @@ func check_memory(){
     fi
 }
 
-func check_ssh(){
+check_ssh () {
     mySSHRESULT=$(ssh -G 2>&1 | grep ${CHECKSSH_OUTPUTFILTER} | wc -l)
     if [ ${mySSHRESULT} -eq 1 ]; then
         SSH_STATUS=0
@@ -59,8 +59,8 @@ func check_ssh(){
         SSH_STATUS=1
     fi
 }
-check_memory()
-check_ssh()
+check_memory
+check_ssh
 if [ ${MEMORY_STATUS} -gt 0 -a ${SSH_STATUS} -gt 0 ]; then
     exitSTATUS=2
     exitSTRING="check_ebury - This system IS infected"
